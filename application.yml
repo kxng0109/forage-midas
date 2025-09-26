@@ -1,0 +1,27 @@
+general:
+  kafka-topic: midas
+
+spring:
+  kafka:
+    consumer:
+      # The address of the Kafka broker(s). The test profile will override this.
+      #bootstrap-servers: localhost:9092
+      # The unique ID for the consumer group
+      group-id: midas-core-consumers
+      # Tells Kafka what to do when there is no initial offset
+      auto-offset-reset: earliest
+      # This tells the consumer how to deserialize the key of the message
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # This is the crucial part for your task!
+      # It tells the consumer to use the JSON deserializer for the message value.
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        # This tells the JsonDeserializer that it's safe to create objects
+        # from any package, including your 'com.jpmc.midascore.domain' package.
+        spring.json.trusted.packages: "*"
+
+    producer:
+      # Tells the producer that the message key will be a simple String.
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # CRITICAL: This tells the producer to convert the Transaction object to JSON before sending.
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
