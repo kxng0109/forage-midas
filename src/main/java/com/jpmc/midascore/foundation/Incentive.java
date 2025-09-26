@@ -1,0 +1,22 @@
+package com.jpmc.midascore.foundation;
+
+public class Incentive {
+	private float amount;
+
+	public Incentive(){}
+
+	public Incentive(float amount){
+		this.amount = amount;
+	}
+
+	public float getAmount() {
+		return amount;
+	}
+
+	@Override
+	public String toString() {
+		return "Incentive{" +
+				"amount=" + amount +
+				'}';
+	}
+}
